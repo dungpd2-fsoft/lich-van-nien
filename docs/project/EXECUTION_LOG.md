@@ -20,3 +20,7 @@ Quy trình: feature branch → build/kiểm tra → review một vòng → commi
 ## Commit 13 runtime
 
 APK production cài và mở trên emulator API35 Status ok. Đã dump UI và chụp ảnh: tháng 11/2026 tải được ngày âm cho ngày trong tháng; 15/11/2026 hiển thị âm 7/10/2026 và Tân Tỵ. Ảnh tại screenshots/13-prod-calendar.png. ADB có lúc offline tạm thời, kết nối lại và thu được bằng chứng; không ghi là crash app. Build demo/prod PASS.
+
+## Commit 15 runtime
+
+Build demo/prod PASS. Cài production và đổi emulator sang 1280x800, density160: UI hiển thị lịch bên trái và chi tiết bên phải cùng ngày15/11; tranh và 3 con giáp rõ, từng vùng có thể cuộn. Đã xem ảnh screenshots/15-prod-wide.png. Chưa coi là đã thử thiết bị gập thật/TalkBack; tiếp tục QA ở16. Artwork chuyển drawable-nodpi để tránh Android tự phóng bitmap theo density.

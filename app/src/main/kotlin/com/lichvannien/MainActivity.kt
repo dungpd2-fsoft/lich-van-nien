@@ -23,6 +23,9 @@ import com.lichvannien.feature.settings.api.SettingsKey
 import com.lichvannien.feature.about.AboutRoute
 import com.lichvannien.feature.about.api.AboutKey
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -36,15 +39,21 @@ class MainActivity : ComponentActivity() {
    val first = messages.firstOrNull()
    val context = LocalContext.current
    LaunchedEffect(first?.id) { if(first != null) { Toast.makeText(context, first.text, Toast.LENGTH_SHORT).show(); settingsModel.handled(first.id) } }
+   val owner = LocalLifecycleOwner.current
+   DisposableEffect(owner) {
+    val observer = LifecycleEventObserver { _, event -> if(event == Lifecycle.Event.ON_RESUME) calendarModel.refreshCurrent() }
+    owner.lifecycle.addObserver(observer)
+    onDispose { owner.lifecycle.removeObserver(observer) }
+   }
    LvnTheme(theme) {
    val stack = rememberNavBackStack(CalendarKey)
    val back: () -> Unit = { if(stack.size > 1) stack.removeLastOrNull() }
    Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
     Column(Modifier.safeDrawingPadding()) {
      if(BuildConfig.FLAVOR == "demo") Text("Bản demo · chỉ có dữ liệu mẫu ở một số ngày", style = MaterialTheme.typography.labelSmall)
-     NavDisplay(backStack = stack, onBack = back, entryProvider = entryProvider {
+     NavDisplay(modifier = Modifier.weight(1f), backStack = stack, onBack = back, entryProvider = entryProvider {
       entry<CalendarKey> { CalendarRoute({stack.add(SettingsKey)}, {stack.add(DayKey(it))}, calendarModel) }
-      entry<DayKey> { DayRoute(it.date, back, calendarModel) }
+      entry<DayKey> { DayRoute(it.date, back, calendarModel, {stack.add(SettingsKey)}) }
       entry<SettingsKey> { SettingsRoute(back, {stack.add(AboutKey)}, settingsModel) }
       entry<AboutKey> { AboutRoute(back) }
      })

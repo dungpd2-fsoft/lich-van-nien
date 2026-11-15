@@ -47,3 +47,18 @@ fun DayHero(day: CalendarDay?, theme: DayTheme, modifier: Modifier = Modifier) {
         }
     }
 }
+
+@Composable
+fun MonthBanner(month: Int, year: Int) {
+    Card(Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge) {
+        Box(Modifier.fillMaxWidth().heightIn(min = 128.dp)) {
+            Image(painterResource(R.drawable.day_neutral), null, Modifier.matchParentSize(), contentScale = ContentScale.Crop)
+            Surface(Modifier.padding(16.dp), color = Color(0xDDFFFBFE), shape = MaterialTheme.shapes.large) {
+                Column(Modifier.padding(16.dp)) {
+                    Text("Tháng $month", color = Color(0xFF352448), style = MaterialTheme.typography.headlineMedium)
+                    Text("$year · Lịch Việt Nam", color = Color(0xFF352448))
+                }
+            }
+        }
+    }
+}
