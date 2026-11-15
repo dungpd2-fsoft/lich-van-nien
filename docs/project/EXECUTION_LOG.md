@@ -16,3 +16,7 @@ Quy trình: feature branch → build/kiểm tra → review một vòng → commi
 - Android SDK: /home/dungpd2/Android/Sdk; compile API 37.0; minSdk 26.
 - Emulator Medium_Phone_API_35 đã boot (emulator-5554). Chưa kiểm tra hành trình nghiệp vụ ở thời điểm bootstrap/domain.
 - Các lỗi build đã sửa trước tích hợp: Java target JVM model/domain khác Kotlin; CircleShape là object không phải constructor.
+
+## Commit 13 runtime
+
+APK production cài và mở trên emulator API35 Status ok. Đã dump UI và chụp ảnh: tháng 11/2026 tải được ngày âm cho ngày trong tháng; 15/11/2026 hiển thị âm 7/10/2026 và Tân Tỵ. Ảnh tại screenshots/13-prod-calendar.png. ADB có lúc offline tạm thời, kết nối lại và thu được bằng chứng; không ghi là crash app. Build demo/prod PASS.

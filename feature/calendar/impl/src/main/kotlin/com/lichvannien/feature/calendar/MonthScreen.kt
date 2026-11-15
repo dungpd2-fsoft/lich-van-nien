@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,12 +25,11 @@ import java.util.Locale
 val vietnameseDate: DateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, dd/MM/yyyy", Locale.forLanguageTag("vi"))
 
 @Composable
-fun CalendarRoute(onSettings: () -> Unit, onDetail: (String) -> Unit) {
-    var monthText by rememberSaveable { mutableStateOf(YearMonth.from(CalendarRules.today()).toString()) }
-    var selectedText by rememberSaveable { mutableStateOf(CalendarRules.today().toString()) }
+fun CalendarRoute(onSettings: () -> Unit, onDetail: (String) -> Unit, model: CalendarViewModel) {
+    val state by model.state.collectAsStateWithLifecycle()
     var showPicker by rememberSaveable { mutableStateOf(false) }
-    if(showPicker) ChooseDateDialog(LocalDate.parse(selectedText), { showPicker = false }) { selectedText = it.toString(); monthText = YearMonth.from(it).toString(); showPicker = false }
-    MonthScreen(YearMonth.parse(monthText), LocalDate.parse(selectedText), emptyMap(), onMonth = { monthText = it.toString() }, onSelect = { selectedText = it.toString(); monthText = YearMonth.from(it).toString() }, onToday = { val d = CalendarRules.today(); selectedText = d.toString(); monthText = YearMonth.from(d).toString() }, onChooseDate = { showPicker = true }, onSettings = onSettings, onDetail = { onDetail(selectedText) })
+    if(showPicker) ChooseDateDialog(state.selected, { showPicker = false }) { model.select(it); showPicker = false }
+    MonthScreen(state.month,state.selected,state.days,model::showMonth,model::select,model::today,{showPicker = true},onSettings,{onDetail(state.selected.toString())})
 }
 
 @Composable
