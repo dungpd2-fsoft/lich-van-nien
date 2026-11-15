@@ -16,3 +16,17 @@ include(":core:domain")
 include(":core:designsystem")
 
 include(":core:ui")
+
+include(":core:navigation")
+
+include(":feature:calendar:api")
+
+include(":feature:calendar:impl")
+
+include(":feature:settings:api")
+
+include(":feature:settings:impl")
+
+include(":feature:about:api")
+
+include(":feature:about:impl")
