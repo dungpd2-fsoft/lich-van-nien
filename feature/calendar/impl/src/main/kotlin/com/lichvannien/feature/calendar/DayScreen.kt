@@ -3,7 +3,8 @@ package com.lichvannien.feature.calendar
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -16,8 +17,14 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun DayRoute(date: String, onBack: () -> Unit) {
-    DayScreen(LocalDate.parse(date), null, false, null, onBack = onBack, onRetry = {})
+fun DayRoute(date: String, onBack: () -> Unit, model: CalendarViewModel) {
+    val requested = LocalDate.parse(date)
+    LaunchedEffect(requested) { if(model.state.value.selected != requested) model.select(requested) }
+    val state by model.state.collectAsStateWithLifecycle()
+    val cached = state.days[requested]
+    val status = state.refresh[requested]
+    val stale = cached != null && (status?.error != null || java.time.Duration.between(cached.fetchedAt,java.time.Instant.now()).seconds >= 300)
+    DayScreen(requested,cached,status?.loading == true,status?.error,onBack,{model.retry(requested)},stale = stale)
 }
 
 @OptIn(ExperimentalLayoutApi::class)
