@@ -32,3 +32,7 @@ include(":feature:about:api")
 include(":feature:about:impl")
 
 include(":core:network")
+
+include(":core:database")
+
+include(":core:datastore")

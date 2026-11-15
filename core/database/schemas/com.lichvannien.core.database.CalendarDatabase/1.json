@@ -1,0 +1,120 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "6da6f165fc8db48eb1f371ba1c3eebf9",
+    "entities": [
+      {
+        "tableName": "calendar_days",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`date` TEXT NOT NULL, `lunarDay` INTEGER NOT NULL, `lunarMonth` INTEGER NOT NULL, `lunarYear` INTEGER NOT NULL, `leap` INTEGER NOT NULL, `chiDay` TEXT, `chiMonth` TEXT, `chiYear` TEXT, `term` TEXT, `duty` TEXT, `hoangDao` INTEGER, `blackDay` INTEGER, `daiCat` INTEGER, `hours` TEXT, `fetchedAt` INTEGER NOT NULL, `source` TEXT NOT NULL, `contract` INTEGER NOT NULL, PRIMARY KEY(`source`, `contract`, `date`))",
+        "fields": [
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lunarDay",
+            "columnName": "lunarDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lunarMonth",
+            "columnName": "lunarMonth",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lunarYear",
+            "columnName": "lunarYear",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "leap",
+            "columnName": "leap",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chiDay",
+            "columnName": "chiDay",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "chiMonth",
+            "columnName": "chiMonth",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "chiYear",
+            "columnName": "chiYear",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "term",
+            "columnName": "term",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "duty",
+            "columnName": "duty",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "hoangDao",
+            "columnName": "hoangDao",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "blackDay",
+            "columnName": "blackDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "daiCat",
+            "columnName": "daiCat",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "hours",
+            "columnName": "hours",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "fetchedAt",
+            "columnName": "fetchedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "source",
+            "columnName": "source",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contract",
+            "columnName": "contract",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "source",
+            "contract",
+            "date"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6da6f165fc8db48eb1f371ba1c3eebf9')"
+    ]
+  }
+}
