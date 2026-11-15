@@ -7,6 +7,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.platform.LocalContext
+import android.widget.Toast
+import com.lichvannien.feature.settings.SettingsViewModel
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.*
 import androidx.navigation3.ui.NavDisplay
@@ -22,9 +27,16 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
  private val calendarModel by viewModels<CalendarViewModel>()
+ private val settingsModel by viewModels<SettingsViewModel>()
  override fun onCreate(savedInstanceState: Bundle?) {
   super.onCreate(savedInstanceState); enableEdgeToEdge()
-  setContent { LvnTheme {
+  setContent {
+   val theme by settingsModel.theme.collectAsStateWithLifecycle()
+   val messages by settingsModel.messages.collectAsStateWithLifecycle()
+   val first = messages.firstOrNull()
+   val context = LocalContext.current
+   LaunchedEffect(first?.id) { if(first != null) { Toast.makeText(context, first.text, Toast.LENGTH_SHORT).show(); settingsModel.handled(first.id) } }
+   LvnTheme(theme) {
    val stack = rememberNavBackStack(CalendarKey)
    val back: () -> Unit = { if(stack.size > 1) stack.removeLastOrNull() }
    Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
@@ -33,7 +45,7 @@ class MainActivity : ComponentActivity() {
      NavDisplay(backStack = stack, onBack = back, entryProvider = entryProvider {
       entry<CalendarKey> { CalendarRoute({stack.add(SettingsKey)}, {stack.add(DayKey(it))}, calendarModel) }
       entry<DayKey> { DayRoute(it.date, back, calendarModel) }
-      entry<SettingsKey> { SettingsRoute(back, {stack.add(AboutKey)}) }
+      entry<SettingsKey> { SettingsRoute(back, {stack.add(AboutKey)}, settingsModel) }
       entry<AboutKey> { AboutRoute(back) }
      })
     }
