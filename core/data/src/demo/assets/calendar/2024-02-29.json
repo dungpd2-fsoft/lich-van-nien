@@ -1,0 +1,37 @@
+{
+    "status": "success",
+    "canonical_url": "https:\/\/lich247.com\/ngay\/29-2-2024",
+    "data": {
+        "solar": {
+            "day": 29,
+            "month": 2,
+            "year": 2024
+        },
+        "lunar": {
+            "day": 20,
+            "month": 1,
+            "year": 2024,
+            "leap": 0,
+            "jd": 2460370
+        },
+        "can_chi": {
+            "year": "Giáp Thìn",
+            "month": "Bính Dần",
+            "day": "Tân Hợi"
+        },
+        "day_of_week": "Thứ Năm",
+        "tiet_khi": "Vũ Thủy",
+        "truc": "Thâu",
+        "isHoangDao": false,
+        "isBlackDay": false,
+        "isDaiCat": false,
+        "gioHoangDao": [
+            "Sửu (01h-03h)",
+            "Thìn (07h-09h)",
+            "Ngọ (11h-13h)",
+            "Mùi (13h-15h)",
+            "Tuất (19h-21h)",
+            "Hợi (21h-23h)"
+        ]
+    }
+}

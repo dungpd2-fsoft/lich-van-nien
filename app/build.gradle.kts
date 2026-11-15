@@ -22,3 +22,5 @@ dependencies {
  implementation(project(":feature:about:api"))
  implementation(project(":feature:about:impl"))
 }
+
+dependencies { implementation(project(":core:data")) }

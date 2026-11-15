@@ -1,0 +1,37 @@
+{
+    "status": "success",
+    "canonical_url": "https:\/\/lich247.com\/ngay\/31-12-2100",
+    "data": {
+        "solar": {
+            "day": 31,
+            "month": 12,
+            "year": 2100
+        },
+        "lunar": {
+            "day": 1,
+            "month": 12,
+            "year": 2100,
+            "leap": 0,
+            "jd": 2488434
+        },
+        "can_chi": {
+            "year": "Canh Thân",
+            "month": "Kỷ Sửu",
+            "day": "Ất Mùi"
+        },
+        "day_of_week": "Thứ Sáu",
+        "tiet_khi": "Đông Chí",
+        "truc": "Phá",
+        "isHoangDao": true,
+        "isBlackDay": false,
+        "isDaiCat": false,
+        "gioHoangDao": [
+            "Dần (03h-05h)",
+            "Mão (05h-07h)",
+            "Tỵ (09h-11h)",
+            "Thân (15h-17h)",
+            "Tuất (19h-21h)",
+            "Hợi (21h-23h)"
+        ]
+    }
+}
