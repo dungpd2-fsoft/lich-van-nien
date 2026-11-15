@@ -7,6 +7,7 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,17 +18,18 @@ import com.lichvannien.core.model.ThemeMode
 fun ThemeMode.label(): String = when(this) { ThemeMode.SYSTEM -> "Theo hệ thống"; ThemeMode.LIGHT -> "Sáng"; ThemeMode.DARK -> "Tối" }
 
 @Composable
-fun SettingsRoute(onBack: () -> Unit, onAbout: () -> Unit) {
-    var mode by rememberSaveable { mutableStateOf(ThemeMode.SYSTEM) }
-    SettingsScreen(mode, { mode = it }, onBack, onAbout)
+fun SettingsRoute(onBack: () -> Unit, onAbout: () -> Unit, model: SettingsViewModel) {
+    val mode by model.theme.collectAsStateWithLifecycle()
+    val saving by model.saving.collectAsStateWithLifecycle()
+    SettingsScreen(mode,model::save,onBack,onAbout,saving)
 }
 
 @Composable
-fun SettingsScreen(mode: ThemeMode, onModeChange: (ThemeMode) -> Unit, onBack: () -> Unit, onAbout: () -> Unit) {
+fun SettingsScreen(mode: ThemeMode, onModeChange: (ThemeMode) -> Unit, onBack: () -> Unit, onAbout: () -> Unit, saving: Boolean = false) {
     var showTheme by rememberSaveable { mutableStateOf(false) }
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
         item { TextButton(onBack) { Text("‹ Về lịch tháng") }; Text("Cài đặt", style = MaterialTheme.typography.headlineLarge) }
-        item { Text("Cá nhân hóa", color = MaterialTheme.colorScheme.primary) }
+        item { if(saving) LinearProgressIndicator(Modifier.fillMaxWidth()); Text("Cá nhân hóa", color = MaterialTheme.colorScheme.primary) }
         item { SettingsItem("Giao diện", mode.label(), { showTheme = true }) }
         item { SettingsItem("Lịch Việt Nam", "Ngày hôm nay theo múi giờ UTC+7", null) }
         item { SettingsItem("Thông tin ứng dụng & nguồn", "Phiên bản, dữ liệu và quyền riêng tư", onAbout) }
