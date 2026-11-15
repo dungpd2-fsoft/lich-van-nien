@@ -1,4 +1,4 @@
-plugins { alias(libs.plugins.android.application); alias(libs.plugins.kotlin.compose) }
+plugins { alias(libs.plugins.hilt); alias(libs.plugins.ksp); alias(libs.plugins.android.application); alias(libs.plugins.kotlin.compose) }
 android {
     namespace = "com.lichvannien"
     compileSdk { version = release(37) { minorApiLevel = 0 } }
@@ -9,3 +9,16 @@ android {
     productFlavors { create("demo") { dimension = "environment"; applicationIdSuffix = ".demo" }; create("prod") { dimension = "environment" } }
 }
 dependencies { implementation(libs.activity.compose); implementation(libs.material3); implementation(libs.compose.ui) }
+
+dependencies {
+ implementation(libs.hilt.android)
+ ksp(libs.hilt.compiler)
+ implementation(libs.navigation.ui)
+ implementation(project(":core:designsystem"))
+ implementation(project(":feature:calendar:api"))
+ implementation(project(":feature:calendar:impl"))
+ implementation(project(":feature:settings:api"))
+ implementation(project(":feature:settings:impl"))
+ implementation(project(":feature:about:api"))
+ implementation(project(":feature:about:impl"))
+}
