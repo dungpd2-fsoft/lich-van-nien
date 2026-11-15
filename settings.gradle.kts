@@ -30,3 +30,5 @@ include(":feature:settings:impl")
 include(":feature:about:api")
 
 include(":feature:about:impl")
+
+include(":core:network")
