@@ -8,3 +8,4 @@ dependencies {
     api(libs.compose.preview)
     debugImplementation(libs.compose.tooling)
 }
+dependencies { api("androidx.compose.animation:animation:1.10.0") }

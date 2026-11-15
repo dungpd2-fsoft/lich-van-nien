@@ -2,6 +2,8 @@ package com.lichvannien.feature.calendar
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -16,22 +18,11 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-@Composable
-fun DayRoute(date: String, onBack: () -> Unit, model: CalendarViewModel) {
-    val requested = LocalDate.parse(date)
-    LaunchedEffect(requested) { if(model.state.value.selected != requested) model.select(requested) }
-    val state by model.state.collectAsStateWithLifecycle()
-    val cached = state.days[requested]
-    val status = state.refresh[requested]
-    val stale = cached != null && (status?.error != null || java.time.Duration.between(cached.fetchedAt,java.time.Instant.now()).seconds >= 300)
-    DayScreen(requested,cached,status?.loading == true,status?.error,onBack,{model.retry(requested)},stale = stale)
-}
-
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun DayScreen(date: LocalDate, cached: CachedDay?, loading: Boolean, error: DataError?, onBack: (() -> Unit)? = null, onRetry: () -> Unit, modifier: Modifier = Modifier, stale: Boolean = false) {
+fun DayScreen(date: LocalDate, cached: CachedDay?, loading: Boolean, error: DataError?, onBack: (() -> Unit)? = null, onRetry: () -> Unit, modifier: Modifier = Modifier, stale: Boolean = false, listState: LazyListState = rememberLazyListState()) {
     val day = cached?.day
-    LazyColumn(modifier.fillMaxSize(), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    LazyColumn(modifier.fillMaxSize(), state = listState, contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item {
             if(onBack != null) TextButton(onBack) { Text("‹ Về lịch tháng") }
             Text(date.format(vietnameseDate), style = MaterialTheme.typography.headlineSmall)
