@@ -24,6 +24,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.lichvannien.core.designsystem.ZodiacImage
+import com.lichvannien.core.ui.FeedbackCard
 import com.lichvannien.core.domain.CalendarRules
 import com.lichvannien.core.model.*
 import java.time.LocalDate
@@ -34,17 +35,17 @@ import java.util.Locale
 val vietnameseDate: DateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, dd/MM/yyyy", Locale.forLanguageTag("vi"))
 
 @Composable
-fun MonthScreen(month: YearMonth, selected: LocalDate, days: Map<LocalDate, CachedDay>, onMonth: (YearMonth) -> Unit, onSelect: (LocalDate) -> Unit, onToday: () -> Unit, onChooseDate: () -> Unit, onSettings: () -> Unit, onDetail: (() -> Unit)?, modifier: Modifier = Modifier, listState: LazyListState = rememberLazyListState()) {
+fun MonthScreen(month: YearMonth, selected: LocalDate, days: Map<LocalDate, CachedDay>, onMonth: (YearMonth) -> Unit, onSelect: (LocalDate) -> Unit, onToday: () -> Unit, onChooseDate: () -> Unit, onSettings: () -> Unit, onDetail: (() -> Unit)?, modifier: Modifier = Modifier, listState: LazyListState = rememberLazyListState(), feedback: Pair<String,String>? = null, onRetry: (() -> Unit)? = null) {
     LazyColumn(modifier.fillMaxSize(), state = listState, contentPadding = PaddingValues(horizontal = 12.dp, vertical = 16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                Text("Lịch vạn niên", style = MaterialTheme.typography.headlineSmall)
+                Text("Lịch vạn niên", Modifier.weight(1f), style = MaterialTheme.typography.headlineSmall)
                 TextButton(onSettings) { Text("Cài đặt") }
             }
             Text("LỊCH VIỆT NAM · UTC+7", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         item { MonthBanner(month.monthValue,month.year) }
-        item { Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) { FilledTonalButton(onToday) { Text("Hôm nay") }; FilledTonalButton(onChooseDate) { Text("Chọn ngày") } } }
+        item { Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) { FilledTonalButton(onToday, Modifier.weight(1f)) { Text("Hôm nay") }; Spacer(Modifier.width(8.dp)); FilledTonalButton(onChooseDate, Modifier.weight(1f)) { Text("Chọn ngày") } } }
         item { MonthGrid(month, selected, days, onMonth, onSelect, onChooseDate) }
         item {
             val day = days[selected]?.day
@@ -62,6 +63,7 @@ fun MonthScreen(month: YearMonth, selected: LocalDate, days: Map<LocalDate, Cach
                 }
             }
         }
+        if(feedback != null) item { FeedbackCard(feedback.first,feedback.second,onRetry) }
         item { Text("Nguồn LICH247 · Thông tin tốt/xấu mang tính tham khảo.", style = MaterialTheme.typography.bodySmall) }
     }
 }

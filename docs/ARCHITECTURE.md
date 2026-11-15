@@ -1,6 +1,6 @@
 # Kiến trúc ứng dụng — đề xuất bước 5
 
-Trạng thái: thiết kế dự kiến, chưa có code Android. Người dùng đã chấp nhận thiết kế để chuyển sang bước 5 và yêu cầu đề xuất commit trước khi triển khai. Không coi hạn mức Figma là điều kiện chặn code.
+Trạng thái: đã triển khai Android theo kiến trúc này trên develop; mô tả ban đầu được đối chiếu với code sau triển khai. Người dùng chấp nhận thiết kế và ủy quyền tự review/merge develop; main do người dùng kiểm thử và merge.
 
 ## Căn cứ đã khảo sát
 
@@ -15,7 +15,7 @@ Repo mẫu: `/home/dungpd2/Project/Android/nowinandroid`.
 
 Không sửa repo mẫu. Không sao chép analytics, Firebase, notifications, WorkManager đồng bộ nền hoặc các module ngoài phạm vi app lịch. Khi tái sử dụng mã nguồn mẫu phải giữ thông báo giấy phép tương ứng.
 
-## Module dự kiến
+## Module và cấu trúc triển khai
 
 ```text
 app/                         Application, MainActivity, Hilt, app state, ghép feature
@@ -28,11 +28,9 @@ core/
   network/                   Retrofit/OkHttp, DTO, API validation
   database/                  Room entity, DAO, migration
   datastore/                 Lưu chế độ giao diện
-  common/                    Clock, dispatcher và tiện ích dùng chung có nhu cầu thực tế
   designsystem/              Theme, typography, component, asset con giáp/tranh
   ui/                        UI nghiệp vụ dùng chung: ngày, can chi, giờ hoàng đạo
   navigation/                Route typed, back stack và điều hướng dùng chung
-  testing/                   Fake, fixture, coroutine test utilities
 feature/
   calendar/api/              Route lịch và chi tiết (LocalDate qua ISO string)
   calendar/impl/             S01, S11, D01, ViewModel, adaptive list/detail
@@ -41,6 +39,8 @@ feature/
   about/api/                 Contract thông tin app
   about/impl/                S12, liên kết và thông tin nguồn
 ```
+
+Clock được inject từ DataModule; chưa cần core:common riêng. Fixture demo nằm core:data/src/demo, không tạo core:testing khi chưa có unit tests theo chỉ dẫn. Trạng thái kết nối công khai dưới Flow trong CalendarRepository; AndroidNetworkMonitor ở data.
 
 Calendar giữ cả lịch tháng và chi tiết: cùng dữ liệu và lựa chọn; trên màn rộng S11 là vùng trong S01. Không tạo module riêng cho từng dialog/toast. Chỉ khởi tạo module khi commit tương ứng có trách nhiệm cụ thể; không tạo hàng loạt module rỗng.
 
@@ -89,10 +89,15 @@ Feature không truy cập Retrofit/DAO hoặc feature impl khác. Network/databa
 
 Đề xuất Compose Material 3 + adaptive, Hilt, Coroutines/Flow, Room, Preferences DataStore, Retrofit/OkHttp + Kotlin serialization, type-safe navigation theo cấu trúc mẫu. Ưu tiên phiên bản stable tương thích; không tự sao chép dependency alpha có trong mẫu. Kiểm tra dependency/API chính thức và môi trường SDK/JDK ở commit bootstrap trước khi khóa version.
 
-Đề xuất minSdk 26 cho bản đầu; compile/target theo SDK và yêu cầu phát hành được xác minh khi triển khai. ApplicationId, tên app và dải năm chính thức cần khóa trước release; namespace tạm có thể dùng `com.lichvannien` cho giai đoạn phát triển. Đây chưa phải applicationId đã được người dùng xác nhận.
+Đã dùng minSdk26, compile/target API37.0, AGP9.3.2, Gradle9.7.1, Kotlin2.3.0 và JDK25 trên máy. ApplicationId, tên app và dải năm chính thức cần khóa trước release; namespace tạm có thể dùng `com.lichvannien` cho giai đoạn phát triển. Đây chưa phải applicationId đã được người dùng xác nhận.
 
 ## Kiểm chứng
 
-Mỗi commit chạy build/lint/test liên quan, giữ demo build được. Unit tests tập trung calendar grid, múi giờ, mapper sai ngày, cache/retry/concurrency và ViewModel. Kiểm thử Compose tập trung hành vi người dùng, screenshot cho màn minh họa sáng/tối và bố cục hẹp/rộng; không tạo test chỉ để khớp implementation.
+Mỗi commit chạy build/lint/test liên quan, giữ demo build được. Theo chỉ dẫn hiện tại không viết unit test mới. Nếu bổ sung sau này, ưu tiên calendar grid, múi giờ, mapper sai ngày, cache/retry/concurrency và ViewModel. Kiểm chứng hiện tại tập trung build/lint và hành vi trên emulator, có screenshot hẹp/rộng/sáng/tối.
 
 Chi tiết thứ tự công việc tại [COMMIT_PLAN.md](project/COMMIT_PLAN.md).
+
+
+## Bằng chứng hiện tại
+
+Build demo/prod và Android lint đã pass. Runtime và giới hạn tại [QA_REPORT.md](project/QA_REPORT.md). Không có unit test mới theo yêu cầu người dùng. CI mới có script/template, chưa chạy trên GitHub.

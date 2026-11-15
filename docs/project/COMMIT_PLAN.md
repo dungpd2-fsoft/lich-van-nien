@@ -1,6 +1,6 @@
 # Kế hoạch commit triển khai
 
-Trạng thái: đề xuất trước khi code theo yêu cầu người dùng. Chưa tạo code Android. Quy trình develop được người dùng ủy quyền tự review và tích hợp. Căn cứ: SPEC.md, UX_DESIGN.md, UI_DESIGN.md và ../ARCHITECTURE.md.
+Trạng thái: đã triển khai16 phần theo thứ tự dưới đây, mỗi phần có branch/review/build trước tích hợp develop. Kết quả thực tế và giới hạn tại QA_REPORT.md; bảng dưới giữ phạm vi kế hoạch để đối chiếu.
 
 Người dùng đã chấp nhận thiết kế để chuyển bước 5. Không yêu cầu duyệt lại Figma/prototype trước code; animation sẽ kiểm chứng trên app. Không tuyên bố prototype Figma đã được tạo.
 

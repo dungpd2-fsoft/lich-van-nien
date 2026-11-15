@@ -14,7 +14,8 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 
-class OfflineCalendarRepository(private val dao: CalendarDao, private val remote: Lich247DataSource, private val clock: Clock) : CalendarRepository {
+class OfflineCalendarRepository(private val dao: CalendarDao, private val remote: Lich247DataSource, private val clock: Clock, monitor: AndroidNetworkMonitor) : CalendarRepository {
+ override val online = monitor.online
  private val permits = Semaphore(2)
  private val pending = ConcurrentHashMap<LocalDate,CompletableDeferred<RefreshResult>>()
  private val retryAt = AtomicLong(0)

@@ -27,7 +27,7 @@ fun DayScreen(date: LocalDate, cached: CachedDay?, loading: Boolean, error: Data
             if(onBack != null) TextButton(onBack) { Text("‹ Về lịch tháng") }
             Text(date.format(vietnameseDate), style = MaterialTheme.typography.headlineSmall)
         }
-        item { DayHero(day, CalendarRules.dayTheme(day)) }
+        item { DayHero(day, CalendarRules.dayTheme(day), date = date) }
         if(loading) item { LinearProgressIndicator(Modifier.fillMaxWidth()); Text("Đang tải thông tin ngày…") }
         if(stale && cached != null) item { FeedbackCard("Bạn đang xem dữ liệu đã lưu", "Lưu lúc " + DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy").withZone(CalendarRules.vietnamZone).format(cached.fetchedAt), if(loading) null else onRetry) }
         if(error != null && cached == null) item { FeedbackCard(if(error == DataError.INVALID_RESPONSE) "Chưa nhận được dữ liệu hợp lệ cho ngày này" else "Chưa tải được thông tin ngày", when(error) { DataError.NETWORK -> "Kiểm tra kết nối rồi thử lại."; DataError.RATE_LIMITED -> "Dịch vụ đang giới hạn truy cập. Vui lòng thử lại sau."; DataError.INVALID_DATE -> "Nguồn chưa hỗ trợ ngày này."; else -> "Dịch vụ tạm thời chưa phản hồi. Vui lòng thử lại." }, if(loading) null else onRetry) }

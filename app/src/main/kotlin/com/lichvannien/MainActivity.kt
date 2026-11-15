@@ -1,6 +1,8 @@
 package com.lichvannien
 
 import android.os.Bundle
+import androidx.core.view.WindowCompat
+import androidx.compose.ui.graphics.luminance
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.activity.compose.setContent
@@ -46,6 +48,13 @@ class MainActivity : ComponentActivity() {
     onDispose { owner.lifecycle.removeObserver(observer) }
    }
    LvnTheme(theme) {
+   val darkBars = MaterialTheme.colorScheme.background.luminance() < 0.5f
+   SideEffect {
+    WindowCompat.getInsetsController(window,window.decorView).apply {
+     isAppearanceLightStatusBars = !darkBars
+     isAppearanceLightNavigationBars = !darkBars
+    }
+   }
    val stack = rememberNavBackStack(CalendarKey)
    val back: () -> Unit = { if(stack.size > 1) stack.removeLastOrNull() }
    Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
