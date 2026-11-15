@@ -1,10 +1,14 @@
 pluginManagement {
     includeBuild("build-logic")
-    repositories { google(); mavenCentral(); gradlePluginPortal() }
+    repositories { google { content { includeGroupByRegex("com\\.android.*"); includeGroupByRegex("com\\.google.*"); includeGroupByRegex("androidx.*") } }; mavenCentral(); gradlePluginPortal() }
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories { google(); mavenCentral() }
+    repositories { google { content { includeGroupByRegex("com\\.android.*"); includeGroupByRegex("com\\.google.*"); includeGroupByRegex("androidx.*") } }; mavenCentral() }
 }
 rootProject.name = "LichVanNien"
 include(":app")
+
+include(":core:model")
+
+include(":core:domain")
