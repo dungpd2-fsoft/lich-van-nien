@@ -1,0 +1,37 @@
+{
+    "status": "success",
+    "canonical_url": "https:\/\/lich247.com\/ngay\/25-7-2025",
+    "data": {
+        "solar": {
+            "day": 25,
+            "month": 7,
+            "year": 2025
+        },
+        "lunar": {
+            "day": 1,
+            "month": 6,
+            "year": 2025,
+            "leap": 1,
+            "jd": 2460882
+        },
+        "can_chi": {
+            "year": "Ất Tỵ",
+            "month": "Quý Mùi",
+            "day": "Quý Mùi"
+        },
+        "day_of_week": "Thứ Sáu",
+        "tiet_khi": "Đại Thử",
+        "truc": "Kiến",
+        "isHoangDao": true,
+        "isBlackDay": false,
+        "isDaiCat": false,
+        "gioHoangDao": [
+            "Dần (03h-05h)",
+            "Mão (05h-07h)",
+            "Tỵ (09h-11h)",
+            "Thân (15h-17h)",
+            "Tuất (19h-21h)",
+            "Hợi (21h-23h)"
+        ]
+    }
+}

@@ -1,0 +1,240 @@
+[
+  {
+    "case": "after-leap",
+    "http": "HTTP/2 200 ",
+    "solar": {
+      "day": 23,
+      "month": 8,
+      "year": 2025
+    },
+    "lunar": {
+      "day": 1,
+      "month": 7,
+      "year": 2025,
+      "leap": 0,
+      "jd": 2460911
+    },
+    "checks": {
+      "jd_matches_gregorian": true,
+      "weekday_matches": true,
+      "flags_types": true
+    }
+  },
+  {
+    "case": "early",
+    "http": "HTTP/2 200 ",
+    "solar": {
+      "day": 1,
+      "month": 1,
+      "year": 1900
+    },
+    "lunar": {
+      "day": 1,
+      "month": 12,
+      "year": 1899,
+      "leap": 0,
+      "jd": 2415021
+    },
+    "checks": {
+      "jd_matches_gregorian": true,
+      "weekday_matches": true,
+      "flags_types": true
+    }
+  },
+  {
+    "case": "future",
+    "http": "HTTP/2 200 ",
+    "solar": {
+      "day": 31,
+      "month": 12,
+      "year": 2100
+    },
+    "lunar": {
+      "day": 1,
+      "month": 12,
+      "year": 2100,
+      "leap": 0,
+      "jd": 2488434
+    },
+    "checks": {
+      "jd_matches_gregorian": true,
+      "weekday_matches": true,
+      "flags_types": true
+    }
+  },
+  {
+    "case": "invalid-day",
+    "http": "HTTP/2 400 ",
+    "solar": null,
+    "lunar": null,
+    "checks": {}
+  },
+  {
+    "case": "invalid-format",
+    "http": "HTTP/2 200 ",
+    "solar": {
+      "day": 15,
+      "month": 11,
+      "year": 2026
+    },
+    "lunar": {
+      "day": 7,
+      "month": 10,
+      "year": 2026,
+      "leap": 0,
+      "jd": 2461360
+    },
+    "checks": {
+      "jd_matches_gregorian": true,
+      "weekday_matches": true,
+      "flags_types": true
+    }
+  },
+  {
+    "case": "leap-before",
+    "http": "HTTP/2 200 ",
+    "solar": {
+      "day": 24,
+      "month": 7,
+      "year": 2025
+    },
+    "lunar": {
+      "day": 30,
+      "month": 6,
+      "year": 2025,
+      "leap": 0,
+      "jd": 2460881
+    },
+    "checks": {
+      "jd_matches_gregorian": true,
+      "weekday_matches": true,
+      "flags_types": true
+    }
+  },
+  {
+    "case": "leap-end",
+    "http": "HTTP/2 200 ",
+    "solar": {
+      "day": 22,
+      "month": 8,
+      "year": 2025
+    },
+    "lunar": {
+      "day": 29,
+      "month": 6,
+      "year": 2025,
+      "leap": 1,
+      "jd": 2460910
+    },
+    "checks": {
+      "jd_matches_gregorian": true,
+      "weekday_matches": true,
+      "flags_types": true
+    }
+  },
+  {
+    "case": "leap-start",
+    "http": "HTTP/2 200 ",
+    "solar": {
+      "day": 25,
+      "month": 7,
+      "year": 2025
+    },
+    "lunar": {
+      "day": 1,
+      "month": 6,
+      "year": 2025,
+      "leap": 1,
+      "jd": 2460882
+    },
+    "checks": {
+      "jd_matches_gregorian": true,
+      "weekday_matches": true,
+      "flags_types": true
+    }
+  },
+  {
+    "case": "missing",
+    "http": "HTTP/2 200 ",
+    "solar": {
+      "day": 15,
+      "month": 11,
+      "year": 2026
+    },
+    "lunar": {
+      "day": 7,
+      "month": 10,
+      "year": 2026,
+      "leap": 0,
+      "jd": 2461360
+    },
+    "checks": {
+      "jd_matches_gregorian": true,
+      "weekday_matches": true,
+      "flags_types": true
+    }
+  },
+  {
+    "case": "solar-leap",
+    "http": "HTTP/2 200 ",
+    "solar": {
+      "day": 29,
+      "month": 2,
+      "year": 2024
+    },
+    "lunar": {
+      "day": 20,
+      "month": 1,
+      "year": 2024,
+      "leap": 0,
+      "jd": 2460370
+    },
+    "checks": {
+      "jd_matches_gregorian": true,
+      "weekday_matches": true,
+      "flags_types": true
+    }
+  },
+  {
+    "case": "tet",
+    "http": "HTTP/2 200 ",
+    "solar": {
+      "day": 17,
+      "month": 2,
+      "year": 2026
+    },
+    "lunar": {
+      "day": 1,
+      "month": 1,
+      "year": 2026,
+      "leap": 0,
+      "jd": 2461089
+    },
+    "checks": {
+      "jd_matches_gregorian": true,
+      "weekday_matches": true,
+      "flags_types": true
+    }
+  },
+  {
+    "case": "today",
+    "http": "HTTP/2 200 ",
+    "solar": {
+      "day": 15,
+      "month": 11,
+      "year": 2026
+    },
+    "lunar": {
+      "day": 7,
+      "month": 10,
+      "year": 2026,
+      "leap": 0,
+      "jd": 2461360
+    },
+    "checks": {
+      "jd_matches_gregorian": true,
+      "weekday_matches": true,
+      "flags_types": true
+    }
+  }
+]

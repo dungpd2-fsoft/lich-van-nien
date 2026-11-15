@@ -1,0 +1,32 @@
+{
+  "status": "local-preview-not-uploaded-to-figma",
+  "palette": "Material 3 baseline purple",
+  "screens": [
+    "S01-calendar-light",
+    "S11-day-detail-light",
+    "S02-settings-light",
+    "S12-about-light",
+    "D01-date-error-light",
+    "D02-theme-light",
+    "S01-tablet-light",
+    "S01-calendar-dark",
+    "S11-day-detail-dark",
+    "S02-settings-dark",
+    "S12-about-dark",
+    "D01-date-error-dark",
+    "D02-theme-dark",
+    "S01-tablet-dark",
+    "state-loading",
+    "state-offline",
+    "state-error",
+    "S01-compact-360",
+    "T01-toast",
+    "S01-selected-not-today",
+    "S11-leap-month"
+  ],
+  "notes": [
+    "Calendar has only verified lunar day 15/11/2026; other cells use missing-data dash.",
+    "These SVGs are local handoff assets; imported SVG hierarchy is not Figma Auto Layout or prototype.",
+    "Actual font depends on installed Roboto/Noto Sans fallback."
+  ]
+}

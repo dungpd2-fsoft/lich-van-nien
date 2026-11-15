@@ -1,0 +1,26 @@
+{
+  "status": "local-preview-not-uploaded-to-figma",
+  "generator": "built-in imagegen",
+  "zodiac_order": [
+    "Tý",
+    "Sửu",
+    "Dần",
+    "Mão",
+    "Thìn",
+    "Tỵ",
+    "Ngọ",
+    "Mùi",
+    "Thân",
+    "Dậu",
+    "Tuất",
+    "Hợi"
+  ],
+  "assets": [
+    "assets/zodiac-atlas.png",
+    "assets/day-hoang-dao-ty.png",
+    "assets/day-quiet.png",
+    "assets/day-neutral.png"
+  ],
+  "mapping": "Data-driven reusable themes, not unique artwork for each date",
+  "reference_day": "2026-11-15"
+}

@@ -1,0 +1,37 @@
+{
+    "status": "success",
+    "canonical_url": "https:\/\/lich247.com\/ngay\/23-8-2025",
+    "data": {
+        "solar": {
+            "day": 23,
+            "month": 8,
+            "year": 2025
+        },
+        "lunar": {
+            "day": 1,
+            "month": 7,
+            "year": 2025,
+            "leap": 0,
+            "jd": 2460911
+        },
+        "can_chi": {
+            "year": "Ất Tỵ",
+            "month": "Giáp Thân",
+            "day": "Nhâm Tý"
+        },
+        "day_of_week": "Thứ Bảy",
+        "tiet_khi": "Xử Thử",
+        "truc": "Định",
+        "isHoangDao": true,
+        "isBlackDay": false,
+        "isDaiCat": false,
+        "gioHoangDao": [
+            "Tý (23h-01h)",
+            "Sửu (01h-03h)",
+            "Mão (05h-07h)",
+            "Ngọ (11h-13h)",
+            "Thân (15h-17h)",
+            "Dậu (17h-19h)"
+        ]
+    }
+}

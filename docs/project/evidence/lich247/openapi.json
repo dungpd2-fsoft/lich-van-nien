@@ -1,0 +1,115 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "LICH247 Calendar API",
+    "description": "API tra cứu lịch âm dương, Can Chi, tiết khí, ngày tốt xấu và giờ hoàng đạo cho người Việt.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://lich247.com"
+    }
+  ],
+  "paths": {
+    "/api/v1/calendar": {
+      "get": {
+        "summary": "Lấy thông tin lịch cho một ngày dương lịch",
+        "operationId": "getCalendarDay",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "required": true,
+            "description": "Ngày dương lịch theo định dạng YYYY-MM-DD.",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "examples": ["2026-06-03"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thông tin lịch trong ngày.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarDayResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ngày không hợp lệ."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CalendarDayResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "examples": ["success"]
+          },
+          "canonical_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "solar": {
+                "$ref": "#/components/schemas/DateParts"
+              },
+              "lunar": {
+                "$ref": "#/components/schemas/LunarDateParts"
+              },
+              "can_chi": {
+                "type": "object",
+                "properties": {
+                  "year": { "type": "string" },
+                  "month": { "type": "string" },
+                  "day": { "type": "string" }
+                }
+              },
+              "day_of_week": { "type": "string" },
+              "tiet_khi": { "type": "string" },
+              "truc": { "type": "string" },
+              "isHoangDao": { "type": "boolean" },
+              "isBlackDay": { "type": "boolean" },
+              "isDaiCat": { "type": "boolean" },
+              "gioHoangDao": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "DateParts": {
+        "type": "object",
+        "properties": {
+          "day": { "type": "integer" },
+          "month": { "type": "integer" },
+          "year": { "type": "integer" }
+        }
+      },
+      "LunarDateParts": {
+        "allOf": [
+          { "$ref": "#/components/schemas/DateParts" },
+          {
+            "type": "object",
+            "properties": {
+              "leap": { "type": "integer" },
+              "jd": { "type": "integer" }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
