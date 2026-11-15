@@ -1,6 +1,6 @@
 # Spec — Lịch vạn niên Android
 
-Trạng thái: Bản nháp 0.2, chờ người dùng duyệt phạm vi. Chưa triển khai app.
+Trạng thái: Spec triển khai v0.3. Người dùng đã chấp nhận phạm vi/thiết kế và cho triển khai; app được phát triển trên develop. Các giới hạn API và phát hành vẫn cần xác minh.
 
 ## Mục tiêu
 
@@ -10,7 +10,7 @@ App Android Kotlin + Jetpack Compose tra cứu lịch âm/dương với dữ li�
 
 Đã xác nhận: Android, Kotlin, Jetpack Compose, nguồn dữ liệu LICH247, giao diện thích ứng, chốt spec trước thiết kế và code. File Figma: https://www.figma.com/design/DBfrO6T6QXhbRho7yUz9uJ/Untitled.
 
-Đã xác nhận thêm: bố cục hài hòa; có animation ở một số thao tác chuyển màn và nhấn chọn (REQ-08, REQ-09). Các tính năng còn lại và chi tiết hiệu ứng dưới đây là đề xuất, chưa được duyệt.
+Đã xác nhận thêm: bố cục hài hòa; có animation ở một số thao tác chuyển màn và nhấn chọn (REQ-08, REQ-09). Các tính năng và hiệu ứng là căn cứ triển khai sau khi người dùng cho chuyển bước5; kiểm chứng trên app theo QA_REPORT.md.
 
 ## Yêu cầu và tiêu chí nghiệm thu
 
@@ -25,7 +25,7 @@ App Android Kotlin + Jetpack Compose tra cứu lịch âm/dương với dữ li�
 | REQ-07 | Nguồn dữ liệu | Có thông tin nguồn LICH247 và phần giới thiệu; nội dung tốt/xấu hiển thị theo nguồn, không tự suy diễn. |
 | REQ-08 | Bố cục hài hòa (đã xác nhận) | Đề xuất nghiệm thu: phân cấp rõ lịch, ngày chọn và thông tin phụ; ngày dương nổi bật hơn ngày âm nhưng cả hai dễ đọc; căn lề, khoảng cách, kiểu chữ nhất quán; giới hạn chiều rộng nội dung trên màn rộng; không kéo giãn ô lịch tùy tiện, không chồng lấn hoặc cắt chữ khi resize/tăng cỡ chữ. Duyệt mẫu điện thoại và tablet trong Figma trước code. |
 | REQ-09 | Animation có chọn lọc (đã xác nhận) | Có phản hồi khi nhấn chọn và chuyển màn. Đề xuất: phản hồi nhấn Material, chuyển vùng chọn ngày, trượt khi đổi tháng, chuyển tiếp lịch sang chi tiết; dùng cùng quy tắc chuyển động trên toàn app. Không chặn thao tác, không làm mất trạng thái khi nhấn liên tục, không nhấp nháy hoặc tự lặp trang trí; tôn trọng thiết lập giảm/tắt animation của hệ thống. Thời lượng và hiệu ứng cụ thể duyệt ở bước UX/UI bằng mẫu tương tác. |
-| REQ-10 | Minh họa con giáp và chủ đề ngày (đã yêu cầu bổ sung) | UI có bộ 12 con giáp Việt Nam (Mão là mèo), dùng con giáp theo địa chi ngày/tháng/năm. Màn ngày có tranh chủ đề và số ngày nổi bật theo ảnh tham khảo người dùng. Ảnh vận khí phải gắn với cờ phân loại API, không tự tạo kết luận; dữ liệu thiếu/mâu thuẫn dùng tranh trung tính. Phương án bộ chủ đề tái sử dụng, chưa phải ảnh độc nhất từng ngày, chờ duyệt UI v2. |
+| REQ-10 | Minh họa con giáp và chủ đề ngày (đã yêu cầu bổ sung) | UI có bộ 12 con giáp Việt Nam (Mão là mèo), dùng con giáp theo địa chi ngày/tháng/năm. Màn ngày có tranh chủ đề và số ngày nổi bật theo ảnh tham khảo người dùng. Ảnh vận khí phải gắn với cờ phân loại API, không tự tạo kết luận; dữ liệu thiếu/mâu thuẫn dùng tranh trung tính. Phương án bộ chủ đề tái sử dụng, chưa phải ảnh độc nhất từng ngày, đã được chấp nhận để triển khai UI v2. |
 
 ## Ràng buộc
 
@@ -42,10 +42,10 @@ App Android Kotlin + Jetpack Compose tra cứu lịch âm/dương với dữ li�
 
 Đăng nhập, đồng bộ đám mây, ngày giỗ/sự kiện cá nhân, thông báo, widget, quảng cáo, nội dung phong thủy mở rộng, đổi trực tiếp âm sang dương và lịch lễ chưa có nguồn xác nhận.
 
-## Câu hỏi mở
+## Quyết định triển khai và việc còn mở
 
-1. Bản đầu chỉ tra cứu hay thêm ngày giỗ, nhắc lịch, widget?
-2. Trang đầu là lịch tháng hay lịch ngày? Đề xuất lịch tháng, chọn ngày để xem chi tiết.
-3. Cần hoạt động offline đầy đủ hay chỉ xem lại ngày đã tải? Đề xuất cache cho bản đầu.
-4. Chốt dải năm, múi giờ (đề xuất lịch Việt Nam Asia/Ho_Chi_Minh), Android tối thiểu và ma trận kiểm thử thiết bị/font sau khi kiểm tra API và thiết kế.
-5. Màu Material 3 cố định hay cho phép màu theo hình nền thiết bị? Chưa xác nhận dynamic color; resize là yêu cầu độc lập.
+- Bản đầu tra cứu lịch tháng/ngày, cache các ngày đã tải; chưa có widget, nhắc lịch hoặc full offline.
+- Kotlin/Compose, minSdk26, lịch Việt Nam Asia/Ho_Chi_Minh, màu Material3 cố định sáng/tối/theo hệ thống; không đổi màu theo hình nền.
+- Code xác thực đầu vào năm1..9999, không coi đó là dải năm API được bảo đảm. Chưa có xác nhận dải năm, quota, chi phí hoặc quyền dùng dữ liệu cho phát hành.
+- ApplicationId com.lichvannien hiện dùng phát triển; package/signing/privacy phát hành cần chốt trước release.
+- Main do người dùng kiểm thử và merge thủ công; không tự phát hành.

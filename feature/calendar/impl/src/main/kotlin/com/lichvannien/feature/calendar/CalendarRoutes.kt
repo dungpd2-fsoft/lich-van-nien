@@ -34,20 +34,26 @@ private fun CalendarAdaptiveRoute(model: CalendarViewModel, onSettings: () -> Un
     val selected = state.selected
     val cached = state.days[selected]
     val status = state.refresh[selected]
-    val stale = cached != null && (status?.error != null || Duration.between(cached.fetchedAt,Instant.now()).seconds >= 300)
+    val stale = cached != null && (!state.online || status?.error != null || Duration.between(cached.fetchedAt,Instant.now()).seconds >= 300)
+    val feedback = when {
+        stale -> "Bạn đang xem dữ liệu đã lưu" to "Dữ liệu lưu trên thiết bị; thử tải lại khi có kết nối."
+        cached == null && status?.error != null -> "Chưa tải được thông tin ngày" to if(status.error == com.lichvannien.core.model.DataError.INVALID_DATE) "Nguồn chưa có dữ liệu cho ngày này." else "Kiểm tra kết nối hoặc thử lại sau."
+        cached == null && status?.loading == true -> "Đang tải thông tin ngày…" to "Bạn vẫn có thể chuyển tháng và chọn ngày."
+        else -> null
+    }
     if(showPicker) ChooseDateDialog(selected, { showPicker = false }) { model.select(it); showPicker = false }
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val wide = maxWidth >= 840.dp
         if(wide) {
             Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                MonthScreen(state.month,selected,state.days,model::showMonth,model::select,model::today,{showPicker = true},onSettings,null,Modifier.weight(1f),monthScroll)
+                MonthScreen(state.month,selected,state.days,model::showMonth,model::select,model::today,{showPicker = true},onSettings,null,Modifier.weight(1f),monthScroll,feedback,if(status?.loading == true) null else { {model.retry()} })
                 DayScreen(selected,cached,status?.loading == true,status?.error,onBack,{model.retry()},Modifier.weight(1f),stale,dayScroll)
             }
         } else {
             Box(Modifier.fillMaxSize(),contentAlignment = Alignment.TopCenter) {
                 val width = Modifier.widthIn(max = 640.dp).fillMaxSize()
                 if(detailPage) DayScreen(selected,cached,status?.loading == true,status?.error,onBack,{model.retry()},width,stale,dayScroll)
-                else MonthScreen(state.month,selected,state.days,model::showMonth,model::select,model::today,{showPicker = true},onSettings,{onDetail(selected.toString())},width,monthScroll)
+                else MonthScreen(state.month,selected,state.days,model::showMonth,model::select,model::today,{showPicker = true},onSettings,{onDetail(selected.toString())},width,monthScroll,feedback,if(status?.loading == true) null else { {model.retry()} })
             }
         }
     }

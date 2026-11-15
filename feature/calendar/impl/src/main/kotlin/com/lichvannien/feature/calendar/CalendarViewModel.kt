@@ -12,7 +12,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 data class RefreshState(val loading: Boolean = false, val error: DataError? = null)
-data class CalendarUiState(val month: YearMonth, val selected: LocalDate, val days: Map<LocalDate,CachedDay> = emptyMap(), val refresh: Map<LocalDate,RefreshState> = emptyMap())
+data class CalendarUiState(val month: YearMonth, val selected: LocalDate, val days: Map<LocalDate,CachedDay> = emptyMap(), val refresh: Map<LocalDate,RefreshState> = emptyMap(), val online: Boolean = true)
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
@@ -24,8 +24,8 @@ class CalendarViewModel @Inject constructor(private val repository: CalendarRepo
     private val selection = combine(month, selected) { m,d -> YearMonth.parse(m) to LocalDate.parse(d) }
     val state: StateFlow<CalendarUiState> = selection.flatMapLatest { (m,d) ->
         val grid = CalendarRules.grid(m)
-        combine(repository.observeDays(grid.first(),grid.last()),repository.observeDays(d,d),refresh) { rows, selectedRows, status ->
-            CalendarUiState(m,d,(rows + selectedRows).associateBy { it.day.solar },status)
+        combine(repository.observeDays(grid.first(),grid.last()),repository.observeDays(d,d),refresh,repository.online) { rows, selectedRows, status, online ->
+            CalendarUiState(m,d,(rows + selectedRows).associateBy { it.day.solar },status,online)
         }
     }.stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),CalendarUiState(YearMonth.parse(month.value),LocalDate.parse(selected.value)))
     init {

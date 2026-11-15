@@ -18,6 +18,7 @@ import kotlinx.serialization.json.Json
  @Provides @Singleton fun calendar(@ApplicationContext context: Context, clock: Clock): CalendarRepository = DemoCalendarRepository(context,clock)
 }
 class DemoCalendarRepository(private val context: Context, private val clock: Clock): CalendarRepository {
+ override val online = AndroidNetworkMonitor(context).online
  private val days = MutableStateFlow<Map<LocalDate,CachedDay>>(emptyMap())
  private val json = Json { ignoreUnknownKeys = true }
  override fun observeDays(start: LocalDate,endInclusive: LocalDate) = days.map { map -> map.values.filter { it.day.solar in start..endInclusive } }

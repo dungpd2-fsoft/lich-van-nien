@@ -1,0 +1,15 @@
+# Template để chuyển vào .github/workflows khi có quyền Workflows write.
+name: Android quality
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - uses: android-actions/setup-android@v3
+      - run: sdkmanager 'platforms;android-37.0' 'build-tools;37.0.0'
+      - run: scripts/check.sh

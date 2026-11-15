@@ -27,7 +27,7 @@ fun ZodiacImage(zodiac: Zodiac?, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun DayHero(day: CalendarDay?, theme: DayTheme, modifier: Modifier = Modifier) {
+fun DayHero(day: CalendarDay?, theme: DayTheme, modifier: Modifier = Modifier, date: java.time.LocalDate? = day?.solar) {
     val asset = when {
         theme == DayTheme.HOANG_DAO && Zodiac.fromCanChi(day?.canChi?.day) == Zodiac.SNAKE -> R.drawable.day_hoang_dao_ty
         theme == DayTheme.QUIET -> R.drawable.day_quiet
@@ -38,8 +38,8 @@ fun DayHero(day: CalendarDay?, theme: DayTheme, modifier: Modifier = Modifier) {
             Image(painterResource(asset), null, Modifier.matchParentSize(), contentScale = ContentScale.Crop, alignment = Alignment.CenterEnd)
             Surface(color = Color(0xD9FFFBFE), shape = MaterialTheme.shapes.large, modifier = Modifier.padding(16.dp)) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(day?.solar?.let { "THÁNG ${it.monthValue} · ${it.year}" } ?: "LỊCH VIỆT NAM", color = Color(0xFF352448), style = MaterialTheme.typography.labelLarge)
-                    Text(day?.solar?.dayOfMonth?.toString() ?: "—", color = Color(0xFF352448), fontSize = 76.sp)
+                    Text(date?.let { "THÁNG ${it.monthValue} · ${it.year}" } ?: "LỊCH VIỆT NAM", color = Color(0xFF352448), style = MaterialTheme.typography.labelLarge)
+                    Text(date?.dayOfMonth?.toString() ?: "—", color = Color(0xFF352448), fontSize = 76.sp)
                     Text(day?.lunar?.let { "${it.day}/${it.month}${if (it.leap) " nhuận" else ""} âm lịch" } ?: "Chưa có thông tin", color = Color(0xFF352448))
                     Text(when(theme) { DayTheme.HOANG_DAO -> "Hoàng đạo · theo nguồn"; DayTheme.QUIET -> "Hắc đạo · theo nguồn"; DayTheme.NEUTRAL -> "Tranh minh họa" }, color = Color(0xFF352448), style = MaterialTheme.typography.labelMedium)
                 }
