@@ -27,7 +27,9 @@ val vietnameseDate: DateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, dd/MM
 fun CalendarRoute(onSettings: () -> Unit, onDetail: (String) -> Unit) {
     var monthText by rememberSaveable { mutableStateOf(YearMonth.from(CalendarRules.today()).toString()) }
     var selectedText by rememberSaveable { mutableStateOf(CalendarRules.today().toString()) }
-    MonthScreen(YearMonth.parse(monthText), LocalDate.parse(selectedText), emptyMap(), onMonth = { monthText = it.toString() }, onSelect = { selectedText = it.toString(); monthText = YearMonth.from(it).toString() }, onToday = { val d = CalendarRules.today(); selectedText = d.toString(); monthText = YearMonth.from(d).toString() }, onChooseDate = {}, onSettings = onSettings, onDetail = { onDetail(selectedText) })
+    var showPicker by rememberSaveable { mutableStateOf(false) }
+    if(showPicker) ChooseDateDialog(LocalDate.parse(selectedText), { showPicker = false }) { selectedText = it.toString(); monthText = YearMonth.from(it).toString(); showPicker = false }
+    MonthScreen(YearMonth.parse(monthText), LocalDate.parse(selectedText), emptyMap(), onMonth = { monthText = it.toString() }, onSelect = { selectedText = it.toString(); monthText = YearMonth.from(it).toString() }, onToday = { val d = CalendarRules.today(); selectedText = d.toString(); monthText = YearMonth.from(d).toString() }, onChooseDate = { showPicker = true }, onSettings = onSettings, onDetail = { onDetail(selectedText) })
 }
 
 @Composable
