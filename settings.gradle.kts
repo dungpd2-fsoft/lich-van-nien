@@ -12,3 +12,7 @@ include(":app")
 include(":core:model")
 
 include(":core:domain")
+
+include(":core:designsystem")
+
+include(":core:ui")
